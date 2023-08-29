@@ -1,0 +1,76 @@
+body.bgc {
+    background-color:#f0f7f4;
+}
+.title {
+    margin-top: 20px;
+    position: relative;
+}
+h3.heading {
+    font-family: Arial, Helvetica, sans-serif;
+}
+.logincard {
+    width: 100%;
+    height: 100%;
+    background-color:#f0f7f4;
+    border-radius: 10px;
+    margin-top: 20%;
+    position: relative;
+    padding: 10px;
+}
+.user {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    position: relative;
+}
+.contact_no {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    position: relative;
+}
+.password {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    position: relative;
+}
+.button {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    position: relative;
+}
+.cutomerHederCard {
+    width: 100%;
+    height: 100%;
+    background-color:#f0f7f4;
+    border-radius: 0px;
+    margin-top: 10px;
+    position: relative;
+    background-color: #33f1af;
+}
+#maparea {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    border-radius: 5px;
+    
+}
+#billarea {
+    width: 100%;
+    height: 100px;
+    margin-top: 70px;
+    position: relative;
+    border-radius: 5px;
+    
+}
+#footerarea {
+    margin-top: 20px;
+    position: relative;
+}
+#pilotinfo {
+    margin-top: 10px;
+    position: relative;
+}

@@ -1,0 +1,76 @@
+#map {
+    height: 100%;
+    background-color: black;
+  }
+  
+  /* 
+    * Optional: Makes the sample page fill the window. 
+    */
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #description {
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+  }
+  
+  #infowindow-content .title {
+    font-weight: bold;
+  }
+  
+  #infowindow-content {
+    display: none;
+  }
+  
+  #map #infowindow-content {
+    display: inline;
+  }
+  
+  .pac-card {
+    width: 100%;
+    height: 100%;
+    background-color:#f0f7f4;
+    border-radius: 5px;
+    position: relative;
+  }
+  
+  #pac-container {
+    padding-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    position: relative;
+  }
+  
+  .pac-controls {
+    display: inline-block;
+    padding: 5px 11px;
+  }
+  
+  .pac-controls label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+  }
+  
+  .pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+  }
+  
+  #pac-input:focus {
+    border-color: #4d90fe;
+  }
+  
+  #title {
+    color: #fff;
+    background-color: #4d90fe;
+    font-size: 15px;
+    font-weight: 300;
+    padding: 6px 12px;
+  }
