@@ -1,10 +1,9 @@
 let baseURL = 'https://x8ki-letl-twmt.n7.xano.io/api:NqXBNLdv/';
-let token = '';
 let iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
 
 $(document).ready(function() {
     let user,userID,userName;
-    token = localStorage.getItem('token');
+    let token = localStorage.getItem('token');
     if(token == '' || token == undefined) {
         $('#loginUI').show();
         $('#customerUI').hide();
@@ -72,6 +71,7 @@ $('#confirmbutton').on('click', function() {
     //console.log('Clicked');
     let source = localStorage.getItem('source');
     let source_loc = JSON.parse(source);
+    let token = localStorage.getItem('token');
     //console.log(source_loc.lat);
     //console.log(source_loc.lng);
     let coordinates = new FormData();
@@ -103,6 +103,7 @@ $('#confirmbutton').on('click', function() {
 
 function sendNotificationAndFindPilot(drivers) {
     //let customerId = localStorage.
+    let token = localStorage.getItem('token');
     let driverids = [];
     for(let i=0; i<drivers.length; i++) {
         driverids.push(drivers[i][0]);
@@ -124,7 +125,8 @@ function sendNotificationAndFindPilot(drivers) {
     });
 }
 
-async function getConfirmationFromPilot(driverids) {
+function getConfirmationFromPilot(driverids) {
+    let token = localStorage.getItem('token');
     const intervalId = setInterval(() => {
         $.ajax({
             url : baseURL+'driver/get/confirmation',
@@ -157,6 +159,7 @@ async function getConfirmationFromPilot(driverids) {
 function saveTripData(customer_id,driver_id,pick_coordinate,drop_coordinate,drop_loc,pic_up_loc,estimated_fare,driverInfo) {
     //console.log(typeof(pic_up_loc));
     //console.log(typeof(drop_loc));
+    let token = localStorage.getItem('token');
     let td = new FormData();
     td.append('customer_id',customer_id);
     td.append('driver_id',driver_id);
@@ -372,36 +375,37 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 function calculateDistance(sourceData, destinationData, map) {
-  const service = new google.maps.DistanceMatrixService();
-  const origin = JSON.parse(sourceData);
-  const destination = JSON.parse(destinationData);
-  const request = {
-    origins: [origin],
-    destinations: [destination],
-    travelMode: google.maps.TravelMode.DRIVING,
-    unitSystem: google.maps.UnitSystem.METRIC,
-    avoidHighways: false,
-    avoidTolls: false,
-  };
-  service.getDistanceMatrix(request).then((response) => {
-    showPath(origin,destination,map);
-    $.ajax({
-        url : baseURL+'fare/customer/all/fares',
-        type : 'GET',
-        headers: { 'Authorization': 'Bearer '+token },
-        success: function(resp) {
-            //console.log(resp.fares[0]);
-            let km = Math.ceil(Number(response.rows[0].elements[0].distance.value) / 1000);
-            let total_fare = (km * resp.fares[1].value) + resp.fares[0].value;
-            localStorage.setItem('estimated_fare', total_fare);
-            $('#estimatedText').text('Estimated Fare : '+total_fare);
-            $('#confirmbtn').show();
-        },
-        error: function(err) {
-            console.log(err);
-        },
+    let token = localStorage.getItem('token');
+    const service = new google.maps.DistanceMatrixService();
+    const origin = JSON.parse(sourceData);
+    const destination = JSON.parse(destinationData);
+    const request = {
+        origins: [origin],
+        destinations: [destination],
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: false,
+        avoidTolls: false,
+    };
+    service.getDistanceMatrix(request).then((response) => {
+        showPath(origin,destination,map);
+        $.ajax({
+            url : baseURL+'fare/customer/all/fares',
+            type : 'GET',
+            headers: { 'Authorization': 'Bearer '+token },
+            success: function(resp) {
+                //console.log(resp.fares[0]);
+                let km = Math.ceil(Number(response.rows[0].elements[0].distance.value) / 1000);
+                let total_fare = (km * resp.fares[1].value) + resp.fares[0].value;
+                localStorage.setItem('estimated_fare', total_fare);
+                $('#estimatedText').text('Estimated Fare : '+total_fare);
+                $('#confirmbtn').show();
+            },
+            error: function(err) {
+                console.log(err);
+            },
+        });
     });
-  });
 }
 
 function showPath(start,end,map) {
