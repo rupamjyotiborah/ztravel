@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="row" id="customerUI">
-                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" id="maparea">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="display: none;" id="maparea">
                     <div class="pac-card" id="pac-card">                        
                         <div id="pac-container">
                             <input id="pac-input" type="text" placeholder="Enter destination" class="form-control pac-input" />
