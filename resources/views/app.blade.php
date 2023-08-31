@@ -19,6 +19,8 @@
         <!-- <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script> -->
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
         
+        <script src="{{ URL::asset('js/jquery.js') }}"></script>
+        <script src="{{ URL::asset('js/apis.js') }}"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7jGPaEa1B7YrsLqCkUI68viJg_i6N5vQ&callback=initMap&libraries=places&v=weekly" defer></script>
         <!-- <script src="{{ URL::asset('js/map.js') }}"></script> -->
 
@@ -108,6 +110,4 @@
 
         </div>
     </body>
-    <script src="{{ URL::asset('js/jquery.js') }}"></script>
-    <script src="{{ URL::asset('js/apis.js') }}"></script>
 </html>
