@@ -1,5 +1,4 @@
 let baseURL = 'https://x8ki-letl-twmt.n7.xano.io/api:NqXBNLdv/';
-let iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
 
 $(document).ready(function() {
     let user,userID,userName;
@@ -8,7 +7,7 @@ $(document).ready(function() {
         $('#loginUI').show();
         $('#customerUI').hide();
         $('#driverUI').hide();
-        //$('#tripUI').hide();
+        $('#maparea').hide();
     } 
     else if(token != '' && token != undefined) {
         $('#loginUI').hide();
@@ -20,11 +19,13 @@ $(document).ready(function() {
             userName = localStorage.getItem('name');
             $('#customername').text('Welcome '+userName);
             $('#driverUI').hide();
+            $('#maparea').show();
             $('#customerUI').show();
         } else if(user == 'pilot') {
             userID = localStorage.getItem('driverID');
             userName = localStorage.getItem('name');
             $('#drivername').text('Welcome '+userName);
+            $('#maparea').hide();
             $('#customerUI').hide();
             $('#driverUI').show();
         } 
