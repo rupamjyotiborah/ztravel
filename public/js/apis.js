@@ -59,6 +59,7 @@ $('#login').on('click', function(e) {
             if(resp.user == 'customer'){ 
                 localStorage.setItem('customerID', resp.customerID);
                 $('#customername').text('Hi '+resp.name);
+                $('#maparea').show();
                 $('#customerUI').show();
             } else if(resp.user == 'pilot') {
                 localStorage.setItem('driverID', resp.driverID);
