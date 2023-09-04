@@ -30,6 +30,30 @@
   #map #infowindow-content {
     display: inline;
   }
+
+  #infowindow-content-source {
+    font-weight: bold;
+  }
+  
+  #infowindow-content-source {
+    display: none;
+  }
+  
+  #map #infowindow-content-source {
+    display: inline;
+  }
+
+  #infowindow-content-dest {
+    font-weight: bold;
+  }
+  
+  #infowindow-content-dest {
+    display: none;
+  }
+  
+  #map #infowindow-content-dest {
+    display: inline;
+  }
   
   .pac-card {
     width: 100%;
@@ -59,6 +83,11 @@
   }
   
   .pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+  }
+
+  .pac-input1 {
     background-color: #fff;
     font-family: Roboto;
   }
