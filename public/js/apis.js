@@ -312,19 +312,36 @@ function sendNotificationAndFindPilot(drivers) {
 
 function getConfirmationFromPilot(driverids) {
     let token = localStorage.getItem('token');
+    let travel_data_id = localStorage.getItem('tripID');
     const intervalId = setInterval(() => {
         $.ajax({
             url : baseURL+'driver/get/confirmation',
             type : 'POST',
             dataType : 'json',
-            data: JSON.stringify({ driverids }),
+            data: JSON.stringify({ driverids,travel_data_id }),
             contentType: "application/json; charset=utf-8",
             headers: { 'Authorization': 'Bearer '+token },
             success: function(resp) {                
                 if(resp.flag == 1) {
                     clearInterval(intervalId);
-                    console.log("A driver has accepted thr trip request");
-                    console.log(resp.driver_data);
+                    console.log("A driver has accepted the trip request");
+                    localStorage.setItem('driverID', resp.driver_data.id);
+                    localStorage.setItem('driverName', resp.driver_data.name);
+                    localStorage.setItem('driverLoc', resp.driver_data.current_loc);
+                    //console.log(resp.driver_data);
+                    let content = resp.driver_data.vehicle_reg_no+'<br />';
+                    content += resp.driver_data.vehicle_model+'<br />';
+                    content += resp.driver_data.vehicle_color+'<br />';
+                    $('#pilotname').text(resp.driver_data.name);
+                    $('#contact').text('Call : '+resp.driver_data.contact_no);
+                    $('#vehicleinfo').html(content);
+                    $('#rating').text('Rating : ' +resp.driver_data.rating);
+                    $('#otp').text('OTP : '+resp.trip_data.otp);
+                    $('#tripid').text('Trip # : '+resp.driver_data.travel_data_id);
+                    $('#connectingpilot').hide();
+                    $('#pilotinfo').show();
+                    let pick_coordinate = localStorage.getItem('source');
+                    //showCustomerAndPilotLocs(resp.driver_data.current_loc,pick_coordinate);
                 } 
                 else {
                     console.log("No driver found till now");
@@ -335,49 +352,6 @@ function getConfirmationFromPilot(driverids) {
             },
         });
     }, 8000);  
-}
-
-function saveTripData(customer_id,pick_coordinate,drop_coordinate,drop_loc,pic_up_loc,estimated_fare) {
-    let token = localStorage.getItem('token');
-    let td = new FormData();
-    let travel_data_id = 0;
-    td.append('customer_id',customer_id);
-    //td.append('driver_id',driver_id);
-    td.append('pick_coordinate',pick_coordinate);
-    td.append('drop_coordinate',drop_coordinate);
-    td.append('drop_loc',JSON.stringify(drop_loc));
-    td.append('pic_up_loc',JSON.stringify(pic_up_loc));
-    td.append('estimated_fare',estimated_fare);
-    $.ajax({
-        url : baseURL+'travel_data/create/',
-        type : 'POST',
-        processData: false,
-        contentType: false,
-        data: td,
-        headers: { 'Authorization': 'Bearer '+token },
-        success: function(resp) {
-            //console.log(resp.trip_data);
-            localStorage.setItem('tripID',resp.trip_data.id);
-            travel_data_id = resp.trip_data.id;
-            console.log('In Save Method : '+travel_data_id);
-            // let content = driverInfo.vehicle_reg_no+'<br />';
-            // content += driverInfo.vehicle_model+'<br />';
-            // content += driverInfo.vehicle_color+'<br />';
-            // $('#pilotname').text(driverInfo.name);
-            // $('#contact').text('Call : '+driverInfo.contact_no);
-            // $('#vehicleinfo').html(content);
-            // $('#rating').text('Rating : ' +driverInfo.rating);
-            // $('#otp').text('OTP : '+resp.trip_data.otp);
-            // $('#tripid').text('Trip # : '+resp.trip_data.id);
-            // $('#connectingpilot').hide();
-            // $('#pilotinfo').show();
-            // showCustomerAndPilotLocs(driverInfo.current_loc.data,pick_coordinate);
-        },
-        error: function(err) {
-            console.log(err);
-        },
-    });
-    return travel_data_id;
 }
 
 function showCustomerAndPilotLocs(driverLoc, customerLoc) {
