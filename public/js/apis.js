@@ -313,6 +313,8 @@ function sendNotificationAndFindPilot(drivers) {
 function getConfirmationFromPilot(driverids) {
     let token = localStorage.getItem('token');
     let travel_data_id = localStorage.getItem('tripID');
+    console.log('Displaying driver ids : ');
+    console.log(driverids);
     const intervalId = setInterval(() => {
         $.ajax({
             url : baseURL+'driver/get/confirmation',
