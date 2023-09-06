@@ -141,7 +141,7 @@ function checkForAssignment() {
                 console.log('Notification not found');
             },
         });
-    }, 5000);    
+    }, 10000);    
 }
 
 $('#accept').on('click', function() {
@@ -282,7 +282,7 @@ $('#confirmbutton').on('click', function() {
                     console.log(err);
                 },
             });
-        }, 3000);
+        }, 8000);
     }, 3000);
 });
 
@@ -321,15 +321,20 @@ function getConfirmationFromPilot(driverids) {
             contentType: "application/json; charset=utf-8",
             headers: { 'Authorization': 'Bearer '+token },
             success: function(resp) {                
-                if(resp.flag == 1) {
-                    clearInterval(intervalId);
-                }                
+                if(resp.driver_data.length > 0) {
+                    //clearInterval(intervalId);
+                    //console.log(resp.driver_data);
+                    console.log("A driver has accepted thr trip request");
+                } 
+                else {
+                    console.log("No driver found till now");
+                }               
             },
             error: function(err) {
                 console.log(err);
             },
         });
-    }, 3000);    
+    }, 8000);  
 }
 
 function saveTripData(customer_id,pick_coordinate,drop_coordinate,drop_loc,pic_up_loc,estimated_fare) {
