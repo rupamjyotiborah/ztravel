@@ -322,7 +322,7 @@ function getConfirmationFromPilot(driverids) {
             headers: { 'Authorization': 'Bearer '+token },
             success: function(resp) {                
                 if(resp.driver_data.length > 0) {
-                    //clearInterval(intervalId);
+                    clearInterval(intervalId);
                     //console.log(resp.driver_data);
                     console.log("A driver has accepted thr trip request");
                 } 
