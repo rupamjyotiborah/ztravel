@@ -321,10 +321,10 @@ function getConfirmationFromPilot(driverids) {
             contentType: "application/json; charset=utf-8",
             headers: { 'Authorization': 'Bearer '+token },
             success: function(resp) {                
-                if(resp.driver_data.length > 0) {
+                if(resp.flag == 1) {
                     clearInterval(intervalId);
-                    //console.log(resp.driver_data);
                     console.log("A driver has accepted thr trip request");
+                    console.log(resp.driver_data);
                 } 
                 else {
                     console.log("No driver found till now");
