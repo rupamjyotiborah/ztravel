@@ -15,14 +15,9 @@
         <link href="{{URL::asset('css/style.css')}}" rel="stylesheet" />
         <link href="{{URL::asset('css/map.css')}}" rel="stylesheet" />
         <!-- Scripts -->
-        <!-- <script src='https://siteseal.certerassl.com/validate/dynamic/sealvalidation/un3Bm+u0ge4=/0'></script> -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-        <!-- <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script> -->
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-        <script type="module" src="{{ URL::asset('js/customerapis.js') }}"></script>
-        <script type="module" src="{{ URL::asset('js/driverapis.js') }}"></script>
-        
-        <!-- <script src="{{ URL::asset('js/map.js') }}"></script> -->
+        <script type="module" src="{{ URL::asset('js/apis.js') }}"></script>
 
     </head>
     <body class="bgc">
@@ -31,7 +26,7 @@
                 <div class="col-md-3 col-lg-3 col-sm col-xs">
                     <h4><strong>ZTRAVEL</strong></h4>
                 </div>
-                <div class="col-md-9 col-lg-9 col-sm col-xs" id="customername"></div>
+                <div class="col-md-9 col-lg-9 col-sm col-xs" id="username"></div>
             </div>
             <div class="row" id="loginUI">
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
@@ -56,8 +51,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row" id="customerUI">
-                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="display: none;" id="maparea">
+            <div class="row" id="mapUI">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" id="maparea">
                     <div class="pac-card" id="pac-card">                        
                         <div id="pac-container">
                             <input id="pac-input" type="text" placeholder="Pick Up Location" class="form-control pac-input" />
@@ -105,6 +100,23 @@
                                     <p id="otp" style="float:right;"></p>
                                 </div> 
                             </div>                                                       
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="notificationModal" class="modal fade" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">You have a new assignment</h5>
+                            <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                        </div>
+                        <!-- <div class="modal-body">
+                            <p>This is a simple Bootstrap modal. Click the "Cancel button", "cross icon" or "dark gray area" to close or hide the modal.</p>
+                        </div> -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" id="accept">Accept</button>
+                            <button type="button" class="btn btn-danger" id="reject">Reject</button>
                         </div>
                     </div>
                 </div>
