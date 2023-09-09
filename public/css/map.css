@@ -20,7 +20,7 @@
   }
   
   #infowindow-content .title {
-    font-weight: bold;
+    font-weight:200;
   }
   
   #infowindow-content {
@@ -32,7 +32,7 @@
   }
 
   #infowindow-content-source {
-    font-weight: bold;
+    font-weight: 200;
   }
   
   #infowindow-content-source {

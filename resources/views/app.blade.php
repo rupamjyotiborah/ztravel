@@ -104,6 +104,21 @@
                     </div>
                 </div>
             </div>
+            <div class="row" id="driverTripUI">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" id="tripinfo" style="display:none;">
+                    <div class="row">
+                        <!-- <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" id="pick_location" style="display:none;"></div> -->
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" id="drop_location"></div>
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" id="driverbtn" style="display:none;">
+                            <button class="btn btn-danger btn-block" id="drivercancelbtn" style="float:right;">Cancel</button>
+                            <button class="btn btn-success btn-block" id="driverconfirmtbtn" style="float:left;">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" id="drivertocustomermap" style="display:none;">
+                    <button class="btn btn-danger btn-block" id="stopbtn" style="float:right;">Stop</button>
+                </div>
+            </div>
             <div id="notificationModal" class="modal fade" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
