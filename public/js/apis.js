@@ -82,6 +82,7 @@ $('#login').on('click', function(e) {
             alert('Location not defined')
         }
     }
+    //console.log(fd);
     let flag = 0;
     $.ajax({
         url : loginAPI,
@@ -167,6 +168,7 @@ $('#accept').on('click', function() {
             console.log(resp);
             localStorage.setItem('customerDropLoc',JSON.stringify(resp.trip_data.drop_coordinate.data));
             localStorage.setItem('destination',JSON.stringify(resp.trip_data.pick_coordinate.data));
+            localStorage.setItem('tripID',JSON.stringify(resp.trip_data.id));
             showCustomerLocLineFromDriver(resp.driver_data.current_loc.data,JSON.stringify(resp.trip_data.pick_coordinate.data), resp.trip_data.drop_loc);
         },
         error : function(error) {
@@ -180,31 +182,32 @@ function showCustomerLocLineFromDriver(driverLoc, customerLoc, drop_loc) {
     //console.log(customerLoc);
     //console.log(driverLoc);
     let map;
-    let bounds = new google.maps.LatLngBounds();
     let mapOptions = {
         mapTypeId: 'roadmap',
         disableDefaultUI: true,
-        zoom : 10,
+        zoom : 12,
     };
     map = new google.maps.Map(document.getElementById("map"), mapOptions); 
-    let marker = new google.maps.Marker({ map,anchorPoint: new google.maps.Point(0, -29), });
-    marker.setVisible(false);    
-    map.setCenter(customerLoc);
-    map.setZoom(10);    
+    let marker = new google.maps.Marker({
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: 'Pick Up',
+    });    
     marker.setPosition(customerLoc);
     marker.setVisible(true);
     
-    let marker1 = new google.maps.Marker({ map,anchorPoint: new google.maps.Point(0, -29), });
-    marker1.setVisible(false);    
-    map.setCenter(driverLoc);
-    map.setZoom(10);    
+    let marker1 = new google.maps.Marker({
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: 'My Location'
+    });   
     marker1.setPosition(driverLoc);
     marker1.setVisible(true); 
     calcDistFromDriverToCustomer(JSON.stringify(driverLoc),JSON.stringify(customerLoc),map,drop_loc);
 }
 
 function calcDistFromDriverToCustomer(sourceData, destinationData, map, drop_loc) {    
-    let token = localStorage.getItem('token');
+    //let token = localStorage.getItem('token');
     const service = new google.maps.DistanceMatrixService();
     const origin = JSON.parse(sourceData);
     const destination = JSON.parse(destinationData);
@@ -229,11 +232,92 @@ function calcDistFromDriverToCustomer(sourceData, destinationData, map, drop_loc
 
 $('#driverconfirmtbtn').on('click', function() {
     //$('#drop_location').text('Drop Location : '+drop_loc);
+    let trip_id = localStorage.getItem('tripID');
+    let driver_id = localStorage.getItem('driverID');
+    let token = localStorage.getItem('token');
+    let fd = new FormData();
     $('#driverbtn').hide();
     $('#tripinfo').hide();
     $('#pac-input').hide();
     $('#pac-input1').hide();
-    $('#drivertocustomermap').show();
+    $('#drivertocustomermap').show();    
+    let driver_current_loc;
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            driver_current_loc = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            };
+            localStorage.setItem('source', JSON.stringify(driver_current_loc));
+            localStorage.setItem('pilot_loc', JSON.stringify(driver_current_loc));
+            localStorage.setItem('test_bed', JSON.stringify(driver_current_loc));
+            fd.append('travel_data_id', trip_id);
+            fd.append('driver_id', driver_id);
+            fd.append('driver_current_loc', JSON.stringify(driver_current_loc));
+            console.log(fd);
+            console.log(driver_current_loc);
+            console.log(driver_id);
+            console.log(trip_id);
+            $.ajax({
+                url : baseURL+'trip_loc',
+                type : 'POST',
+                processData: false,
+                contentType: false,
+                data : fd,
+                headers : {
+                    'Authorization' : 'Bearer '+token,
+                },
+                success : function(resp) {
+                    console.log('Location Added');
+                    localStorage.setItem('trip_loc_id',JSON.stringify(resp.trip_loc.id));
+                },
+                error : function(error) {
+                    console.log(error);
+                },    
+            });
+        },
+        () => {
+            handleLocationError(true, infoWindow, map.getCenter());
+        }
+    );    
+    
+    let trip_loc_id = localStorage.getItem('trip_loc_id');
+    console.log(trip_loc_id);
+    // let intID = setInterval(() => {
+    //     let driver_current_loc;
+    //     navigator.geolocation.getCurrentPosition(
+    //         (position) => {
+    //             driver_current_loc = {
+    //                 lat: position.coords.latitude,
+    //                 lng: position.coords.longitude,
+    //             };
+    //             localStorage.setItem('source', JSON.stringify(driver_current_loc));
+    //             localStorage.setItem('pilot_loc', JSON.stringify(driver_current_loc));
+    //         },
+    //         () => {
+    //             handleLocationError(true, infoWindow, map.getCenter());
+    //         }
+    //     );    
+    //     let fd = new FormData();
+    //     fd.append('trip_loc_id', trip_id);
+    //     fd.append('driver_current_loc', driver_current_loc);
+    //     $.ajax({
+    //         url : baseURL+'trip_loc/update_loc',
+    //         type : 'POST',
+    //         processData: false,
+    //         contentType: false,
+    //         data : fd,
+    //         headers : {
+    //             'Authorization' : 'Bearer '+token,
+    //         },
+    //         success : function(resp) {
+    //             console.log('Location Updated');
+    //         },
+    //         error : function(error) {
+    //             console.log('Something went wrong : '+error);
+    //         },    
+    //     });    
+    // }, 7000);
 });
 
 function updatePilotLoc(driverID) {
